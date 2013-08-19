@@ -1,0 +1,272 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: GM Media Tag v0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2013-08-18 23:37:47+0000\n"
+"Last-Translator: zoom <info@zoom-multiservice.it>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: CSL v1.x\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: inc/GMMediaTags.class.php:98
+#@ gmmediatags
+msgctxt "taxonomy general label"
+msgid "Media Tags"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:152
+#@ gmmediatags
+msgctxt "taxonomy general name label"
+msgid "label"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:153
+#@ gmmediatags
+msgctxt "taxonomy singular name label"
+msgid "label"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:154
+#@ gmmediatags
+msgctxt "taxonomy menu name label"
+msgid "label"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:155
+#@ gmmediatags
+msgctxt "taxonomy all items label"
+msgid "All Items"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:156
+#@ gmmediatags
+msgctxt "taxonomy edit item label"
+msgid "Edit Item"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:157
+#@ gmmediatags
+msgctxt "taxonomy view item label"
+msgid "View Item"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:158
+#@ gmmediatags
+msgctxt "taxonomy update item label"
+msgid "Update Item"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:159
+#@ gmmediatags
+msgctxt "taxonomy add new item label"
+msgid "Add New Item"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:160
+#@ gmmediatags
+msgctxt "taxonomy new item name label"
+msgid "New Item Name"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:161
+#@ gmmediatags
+msgctxt "taxonomy parent item label"
+msgid "Parent Item"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:162
+#: inc/GMMediaTags.class.php:184
+#@ gmmediatags
+msgctxt "taxonomy parent item colon label"
+msgid "Parent:"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:163
+#@ gmmediatags
+msgctxt "taxonomy search items label"
+msgid "Search Items"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:164
+#@ gmmediatags
+msgctxt "taxonomy popular items label"
+msgid "Popular Items"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:165
+#@ gmmediatags
+msgctxt "taxonomy add or remove items label"
+msgid "Add or Remove Items"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:166
+#@ gmmediatags
+msgctxt "taxonomy choose from most used label"
+msgid "Choose from Most Used Items"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:167
+#@ gmmediatags
+msgctxt "taxonomy not found label"
+msgid "No Items Found"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:174
+#@ gmmediatags
+msgctxt "taxonomy general name label"
+msgid "Media Tags"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:175
+#@ gmmediatags
+msgctxt "taxonomy singular name label"
+msgid "Media Tag"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:176
+#@ gmmediatags
+msgctxt "taxonomy menu name label"
+msgid "Media Tags"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:177
+#@ gmmediatags
+msgctxt "taxonomy all items label"
+msgid "All Media Tags"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:178
+#@ gmmediatags
+msgctxt "taxonomy edit item label"
+msgid "Edit Media Tag"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:179
+#@ gmmediatags
+msgctxt "taxonomy view item label"
+msgid "View Media Tag"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:180
+#@ gmmediatags
+msgctxt "taxonomy update item label"
+msgid "Update Media Tag"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:181
+#@ gmmediatags
+msgctxt "taxonomy add new item label"
+msgid "Add New Media Tag"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:182
+#@ gmmediatags
+msgctxt "taxonomy new item name label"
+msgid "New Media Tag Name"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:183
+#@ gmmediatags
+msgctxt "taxonomy parent item label"
+msgid "Parent Media Tag"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:185
+#@ gmmediatags
+msgctxt "taxonomy search items label"
+msgid "Search Media Tags"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:186
+#@ gmmediatags
+msgctxt "taxonomy popular items label"
+msgid "Popular Media Tags"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:187
+#@ gmmediatags
+msgctxt "taxonomy add or remove items label"
+msgid "Add or Remove Media Tags"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:188
+#@ gmmediatags
+msgctxt "taxonomy choose from most used label"
+msgid "Choose from Most Used Media Tags"
+msgstr ""
+
+#: inc/GMMediaTags.class.php:189
+#@ gmmediatags
+msgctxt "taxonomy not found label"
+msgid "No Media Tags Found"
+msgstr ""
+
+#: inc/GMMediaTagsAdmin.class.php:76
+#@ gmmediatags
+msgid "Remove from bulk edit"
+msgstr ""
+
+#: inc/GMMediaTagsAdmin.class.php:77
+#@ gmmediatags
+msgid "Error on update attachments"
+msgstr ""
+
+#: inc/GMMediaTagsAdmin.class.php:78
+#@ gmmediatags
+msgid "Assign Terms"
+msgstr ""
+
+#: inc/GMMediaTagsAdmin.class.php:180
+#, php-format
+#@ gmmediatags
+msgid "%s attachments updated successfully."
+msgstr ""
+
+#: inc/GMMediaTagsAdmin.class.php:182
+#@ gmmediatags
+msgid "Error on update attachments."
+msgstr ""
+
+#: inc/GMMediaTagsAdmin.class.php:185
+#, php-format
+#@ gmmediatags
+msgid "Error on update %s attachments."
+msgstr ""
+
+#: inc/GMMediaTagsAdmin.class.php:226
+#@ gmmediatags
+msgid "Bulk Edit"
+msgstr ""
+
+#: inc/GMMediaTagsAdmin.class.php:234
+#@ gmmediatags
+msgid "Remove From Bulk Edit"
+msgstr ""
+
+#: inc/GMMediaTagsAdmin.class.php:263
+#@ gmmediatags
+msgid "Remove all terms from: "
+msgstr ""
+
+#: inc/GMMediaTagsAdmin.class.php:272
+#@ default
+msgid "Cancel"
+msgstr ""
+
+#: inc/GMMediaTagsAdmin.class.php:273
+#@ default
+msgid "Update"
+msgstr ""
+
