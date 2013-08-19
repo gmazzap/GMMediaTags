@@ -38,20 +38,6 @@ class GMMediaTags {
 	
 	
 	/**
-	* Default arguments to register taxonomies.
-	*
-	* @since	0.1.0
-	*
-	* @access	protected
-	*
-	* @var	array
-	*/
-	protected static $defaults;
-	
-	
-	
-	
-	/**
 	* Registered taxonomies names
 	*
 	* @since	0.1.0
@@ -94,18 +80,6 @@ class GMMediaTags {
 		
 		if ( ! defined('GMMEDIATAGSPATH') ) die();
 		
-		self::$defaults = array(
-			'label'					=>	_x('Media Tags', 'taxonomy general label', 'gmmediatags'),
-			'public'				=>	true,
-			'show_ui'				=>	true,
-			'show_in_nav_menus'		=>	false,
-			'show_tagcloud'			=>	false,
-			'show_admin_column'		=>	true,
-			'hierarchical'			=>	false,
-			'update_count_callback'	=>	'_update_generic_term_count',
-			'rewrite'				=>	true
-		);
-		
 		add_action('init', array(__CLASS__, 'register'), 999 );
 		add_action('admin_init', array(__CLASS__, 'admin_init') );
 		
@@ -132,12 +106,19 @@ class GMMediaTags {
 			return;
 		}
 		
-		if ( empty(self::$defaults) ) {
-			_doing_it_wrong( 'GMMediaTags::register', 'GMMediaTags register method must be called after class initizialization.' );
-			return;
-		}
+		$defaults = array(
+			'label'					=>	_x('Media Tags', 'taxonomy general label', 'gmmediatags'),
+			'public'				=>	true,
+			'show_ui'				=>	true,
+			'show_in_nav_menus'		=>	false,
+			'show_tagcloud'			=>	false,
+			'show_admin_column'		=>	true,
+			'hierarchical'			=>	false,
+			'update_count_callback'	=>	'_update_generic_term_count',
+			'rewrite'				=>	true
+		);
 		
-		$taxonomies = apply_filters('gm_mediatags_tax', array( 'media_tag' => self::$defaults ) );
+		$taxonomies = apply_filters('gm_mediatags_tax', array( 'media_tag' => $defaults ) );
 		
 		self::$done = true;
 		
@@ -166,7 +147,7 @@ class GMMediaTags {
 					'choose_from_most_used'	=> _x('Choose from Most Used Items', 'taxonomy choose from most used label', 'gmmediatags'),
 					'not_found'				=> _x('No Items Found', 'taxonomy not found label', 'gmmediatags'),
 				);
-				$args = wp_parse_args($args, self::$defaults);
+				$args = wp_parse_args($args, $defaults);
 				if ( ! isset($args['labels']) || empty($args['labels']) ) $args['labels'] = array();
 				$args['labels'] = wp_parse_args($args['labels'], $default_labels);
 			} else {
