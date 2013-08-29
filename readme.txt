@@ -27,6 +27,7 @@ Register a taxonomy 'Media Tag' for attachment and gives the ability to bulk ass
 * Changed admin notices
 * Improved security on ajax
 * Proper user capability check for deleting terms
+* Added gm_mediatags_pre_ui_print / gm_mediatags_ui_printed actions
 
 = 0.1.0 - 19/08/2013 =
 * Initial Release.

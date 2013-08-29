@@ -242,6 +242,7 @@ class GMMediaTagsAdmin {
 			else
 				$flat_taxonomies[] = $taxonomy;
 		}
+		do_action('gm_mediatags_pre_ui_print');
 		?>
         <tr id="bulk-edit" class="inline-edit-row inline-edit-row-media inline-edit-media bulk-edit-row bulk-edit-row-media bulk-edit-media inline-editor" style="display: table-row;">
         <td colspan="<?php echo $colspan  ?>" class="colspanchange">
@@ -302,6 +303,7 @@ class GMMediaTagsAdmin {
 		</td>
         </tr>
         <?php
+		do_action('gm_mediatags_ui_printed');
 		die();
 	}	
 	
