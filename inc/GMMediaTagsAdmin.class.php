@@ -8,6 +8,20 @@
  */
 class GMMediaTagsAdmin {
 	
+	
+	/**
+	* Class version
+	*
+	* @since	0.1.0
+	*
+	* @access	protected
+	*
+	* @var	string
+	*/
+	protected static $version = '0.1.1';
+	
+	
+	
 	/**
 	* Registered taxonomies names
 	*
@@ -72,16 +86,15 @@ class GMMediaTagsAdmin {
 	static function add_scripts( $hook ) {
 		if( $hook == 'upload.php' ) {
 			wp_enqueue_script( 'suggest' );
+			wp_enqueue_script( 'GMMediaTags', GMMEDIATAGSURL . 'inc/GMMediaTags.js', array('jquery'), null, true);
 			$vars = array(
 				'remove_from_edit'	=> 	__('Remove from bulk edit', 'gmmediatags'),
 				'update_error'		=> 	__('Error on update attachments', 'gmmediatags'),
 				'assign_terms'		=> 	__('Assign Terms', 'gmmediatags'),
-				'nonce_html'		=>	wp_create_nonce('add_media_tag_bulk_tr'),
-				'nonce_save'		=>	wp_create_nonce('save_media_tag_bulk')
+				'ver_html'		=>	wp_create_nonce('add_media_tag_bulk_tr'),
+				'ver_save'		=>	wp_create_nonce('save_media_tag_bulk')
 			);
-			wp_register_script( 'GMMediaTags', GMMEDIATAGSURL . 'inc/GMMediaTags.js', array('jquery'), null, true );
 			wp_localize_script( 'GMMediaTags', 'gm_mediatags_vars', $vars );
-			wp_enqueue_script( 'GMMediaTags' );
 		}
 	}
 	
@@ -124,39 +137,52 @@ class GMMediaTagsAdmin {
 		if ( ! defined('DOING_AJAX') ) die();
 		if ( ! isset($_POST['formData']) ) self::json_out(false, 'formData_error');
 		parse_str ( $_POST['formData'], $form_data );
+		
+		$referer = isset($form_data['_wp_http_referer']) ? $form_data['_wp_http_referer'] : null;
+		$nonce = isset($_POST['media_tag_ver']) ? $_POST['media_tag_ver'] : null;
 		$screen = isset($form_data['screen']) ? $form_data['screen'] : null;
-		$nonce = isset($_POST['media_tag_nonce']) ? $_POST['media_tag_nonce'] : array();
-		if ( empty($nonce) || empty($screen) ) self::json_out(false, 'empty_error');
-		if ( ! wp_verify_nonce($_POST['media_tag_nonce'], 'save_media_tag_bulk') ) self::json_out(false, 'nonce_error');
-		if ( $screen != 'upload' ) self::json_out(false, 'screen_error');
+		if ( empty($nonce) || empty($referer) || empty($screen) ) self::json_out(false, 'security error 10');
+		if ( ! wp_verify_nonce($_POST['media_tag_ver'], 'save_media_tag_bulk') ) self::json_out(false, 'security error 20');
+		$from = parse_url( $referer );
+		$admin_url = admin_url('upload.php');
+		if ( ! $from || ! isset($from['path']) || $admin_url != site_url() . $from['path'] ) self::json_out(false, 'security error 30');
+		if ( $screen != 'upload' ) self::json_out(false, 'security error 40');
+		
+		$orig_qv = array();
+		if ( isset($from['query']) ) parse_str($from['query'], $orig_qv);
 		$taxonomies = isset($form_data['tax_input']) ? $form_data['tax_input'] : array();
 		$clean_taxonomies = isset($form_data['clean_tax']) ? $form_data['clean_tax'] : array();
 		$toclean = array_keys($clean_taxonomies);
 		$attachments = isset($_POST['attachments']) ? $_POST['attachments'] : array();
-		if ( empty($taxonomies) || empty($attachments) ) self::json_out( array( 'bulk_media_tag' => 'none' ) );
+		
+		if ( ( empty($taxonomies) && empty($clean_taxonomies) ) || empty($attachments) ) self::json_out( array( 'bulk_media_tag' => 'none' ) );
 		$errors = 0;
 		$done = null;
+		$tax_objs = array();
 		foreach( $taxonomies as $taxonomy => $terms ) {
 			if ( empty($terms) || in_array($taxonomy, $toclean) ) continue;
-			$done = 0;
 			$tax_obj = get_taxonomy($taxonomy);
+			$tax_objs[$taxonomy] = $tax_obj;
 			if ( ! current_user_can( $tax_obj->cap->assign_terms ) ) continue;
+			$done = 1;
 			foreach( $attachments as $attachment ) {
-				if ( is_array( wp_set_post_terms( $attachment, $terms, $taxonomy, false ) ) ) $done++; else $errors++;
+				if ( ! is_array( wp_set_post_terms( $attachment, $terms, $taxonomy, true ) ) ) $errors++;
 			}
 		}
 		if ( ! empty($clean_taxonomies) ) { foreach ($clean_taxonomies as $taxonomy => $val ) {
 			if ( $val == 1 ) {
-				$done = 0;
+				$tax_obj = isset($tax_objs[$taxonomy]) ? $tax_objs[$taxonomy] : get_taxonomy($taxonomy);
+				if ( ! current_user_can( $tax_obj->cap->delete_terms ) ) continue;
+				$done = 1;
 				foreach( $attachments as $attachment ) {
-					if ( is_array( wp_set_post_terms( $attachment, array(), $taxonomy, false ) ) ) $done++; else $errors++;
+					if ( ! is_array( wp_set_post_terms( $attachment, array(), $taxonomy, false ) ) ) $errors++;
 				}
 			}
 		} }
 		if ( is_null($done) ) self::json_out( array( 'bulk_media_tag' => 'none' ) );
-		$location = isset($form_data['_wp_http_referer']) ? site_url() . $form_data['_wp_http_referer'] : admin_url('upload.php');
-		$location = add_query_arg( array( 'done' => $done, 'errors' => $errors, 'bulk_media_tag' => 'updated' ), $location );
-		$data = array( 'location' => $location, 'bulk_media_tag' => 'done');
+		$location = add_query_arg( array( 'bulk_media_tag' => 'updated' ), $admin_url );
+		if ( ! empty($orig_qv) ) $location = add_query_arg( $orig_qv, $location );
+		$data = array( 'location' => $location, 'bulk_media_tag' => 'updated');
 		self::json_out( $data );
 	}
 	
@@ -174,16 +200,14 @@ class GMMediaTagsAdmin {
 	 */
 	static function notices() {
 		global $pagenow;
-		if( $pagenow == 'upload.php' ) {
-			if ( isset($_GET['bulk_media_tag']) && $_GET['bulk_media_tag'] == 'updated' ) {
-				if (  isset($_GET['done']) && $_GET['done'] > 0 ) {
-					printf( '<div class="updated"><p>' . __( '%s attachments updated successfully.', 'gmmediatags') . '</p></div>', $_GET['done'] );
-				} elseif ( isset($_GET['done']) && $_GET['done'] == 0) {
-					echo '<div class="error"><p>' . __( 'Error on update attachments.', 'gmmediatags') . '</p></div>';
-				}
-				if (  isset($_GET['errors']) && $_GET['errors'] > 0 ) {
-					printf( '<div class="error"><p>' . __( 'Error on update %s attachments.', 'gmmediatags') . '</p></div>', $_GET['done'] );
-				}
+		if( $pagenow == 'upload.php' &&  isset($_GET['bulk_media_tag']) && ! empty($_GET['bulk_media_tag']) ) {
+			$result = $_GET['bulk_media_tag'];
+			if ( $result == 'updated' ) {
+				echo '<div class="updated"><p>' . __( 'Attachments updated successfully.', 'gmmediatags') . '</p></div>';		
+			} elseif ( $result == 'none' ) {
+				echo '<div class="updated"><p>' . __( 'Nothing to update: no media or no terms selected.', 'gmmediatags') . '</p></div>';
+			} else {
+				echo '<div class="error"><p>' . __( 'Error on update attachments.', 'gmmediatags') . '</p></div>';
 			}
 		}
 		
@@ -204,7 +228,7 @@ class GMMediaTagsAdmin {
 	static function print_tr() {
 		if ( ! defined('DOING_AJAX') ) die();
 		if ( empty( self::$registered ) ) die();
-		if ( ! isset($_POST['media_tag_nonce']) || ! wp_verify_nonce($_POST['media_tag_nonce'], 'add_media_tag_bulk_tr')) die();
+		if ( ! isset($_POST['media_tag_ver']) || ! wp_verify_nonce($_POST['media_tag_ver'], 'add_media_tag_bulk_tr')) die();
 		error_reporting(0);
 		$colspan = isset( $_POST['colspan'] ) && intval($_POST['colspan']) ? $_POST['colspan'] : 8;
 		$hierarchical_taxonomies = array();

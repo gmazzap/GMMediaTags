@@ -10,7 +10,7 @@ class GMMediaTags {
 	
 	
 	/**
-	* Plugin version
+	* Class version
 	*
 	* @since	0.1.0
 	*
@@ -18,7 +18,7 @@ class GMMediaTags {
 	*
 	* @var	string
 	*/
-	protected static $version = '0.1.0';
+	protected static $version = '0.1.1';
 	
 	
 	
@@ -33,20 +33,6 @@ class GMMediaTags {
 	* @var	bool
 	*/
 	protected static $done = false;
-	
-	
-	
-	
-	/**
-	* Registered taxonomies names
-	*
-	* @since	0.1.0
-	*
-	* @access	public
-	*
-	* @var	array
-	*/
-	protected static $registered = array();
 	
 	
 	
@@ -99,6 +85,7 @@ class GMMediaTags {
 	 */
 	static function register() {
 		
+		// allow plugins or themes to disable registration
 		if ( ! apply_filters('gm_mediatags_enable_register', true) ) return;
 		
 		if ( self::$done ) {
@@ -122,10 +109,7 @@ class GMMediaTags {
 		
 		self::$done = true;
 		
-		self::$registered = get_object_taxonomies('attachment');
-		
 		if ( ! empty( $taxonomies) ) { foreach ( $taxonomies as $tax => $args ) {
-			if ( in_array($tax, self::$registered) ) continue;
 			if ( $tax != 'media_tag' ) {
 				if ( ! isset($args['label']) || empty($args['label']) ) $args['label'] = $tax;
 				$tax = sanitize_title( $tax );
@@ -174,7 +158,6 @@ class GMMediaTags {
 			}
 			if ( $tax ) {
 				register_taxonomy( $tax, 'attachment', $args );
-				self::$registered[] = $tax;
 			}
 		} }
 		

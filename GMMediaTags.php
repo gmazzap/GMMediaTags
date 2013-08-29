@@ -3,7 +3,7 @@
  * Plugin Name: GM Media Tags
  *
  * Description: Register a taxonomy 'Media Tag' for attachment and gives the ability to bulk assignment attachment taxonomies in backend, even for taxonomies not registered by plugin.
- * Version: 0.1.0
+ * Version: 0.1.1
  * Author: Giuseppe Mazzapica
  * Requires at least: 3.5
  * Tested up to: 3.6

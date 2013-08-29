@@ -21,5 +21,12 @@ Register a taxonomy 'Media Tag' for attachment and gives the ability to bulk ass
 
 == Changelog ==
 
+= 0.1.1 - 29/08/2013 =
+* Minor bugs fixed.
+* Better support for paged and other query param on upload.php page
+* Changed admin notices
+* Improved security on ajax
+* Proper user capability check for deleting terms
+
 = 0.1.0 - 19/08/2013 =
 * Initial Release.
